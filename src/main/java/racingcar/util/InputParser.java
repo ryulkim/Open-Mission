@@ -1,9 +1,16 @@
 package racingcar.util;
 
+import static racingcar.common.Exception.NOT_NUMBER;
+import static racingcar.common.Exception.NOT_UNDER_ZERO;
+
 import java.util.HashSet;
 import java.util.Set;
+import racingcar.common.Exception;
 
 public class InputParser {
+
+    static final int MINIMUM_CARS_NAME_LENGTH = 5;
+
     public static String[] parseCarNames(String input) {
         String[] names = input.split(",");
         Set<String> uniqueNames = new HashSet<>();
@@ -12,10 +19,10 @@ public class InputParser {
             names[i] = names[i].trim();
 
             if (!uniqueNames.add(names[i])) {
-                throw new IllegalArgumentException("중복된 자동차 이름이 있습니다: " + names[i]);
+                throw new IllegalArgumentException(Exception.DUPLICATE_CAR_NAME + ": " + names[i]);
             }
-            if (!validLess(names[i], 5)) {
-                throw new IllegalArgumentException("자동차 이름은 5자리 이하여야 합니다.");
+            if (!validLess(names[i])) {
+                throw new IllegalArgumentException(Exception.EXCEED_CAR_NAME.toString());
             }
         }
         return names;
@@ -25,15 +32,15 @@ public class InputParser {
         try {
             int result = Integer.parseInt(input);
             if (result <= 0) {
-                throw new IllegalArgumentException("시도 횟수가 0 이하일 수는 없습니다.");
+                throw new IllegalArgumentException(NOT_UNDER_ZERO.toString());
             }
             return Integer.parseInt(input.trim());
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("정수가 아닌 입력값을 받았습니다.");
+            throw new IllegalArgumentException(NOT_NUMBER.toString());
         }
     }
 
-    private static boolean validLess(String input, int length) {
-        return input.length() <= length;
+    private static boolean validLess(String input) {
+        return input.length() <= MINIMUM_CARS_NAME_LENGTH;
     }
 }
