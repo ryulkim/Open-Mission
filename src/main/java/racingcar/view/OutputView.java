@@ -1,16 +1,19 @@
 package racingcar.view;
 
+import static racingcar.common.Message.RESULT;
+import static racingcar.common.Message.WINNER;
+
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayList;
 import racingcar.model.RacingCar;
 
 public class OutputView {
     public static void finalWinner(ArrayList<String> racingCars) {
-        print(String.format("%s : %s", "최종 우승자", String.join(", ", racingCars)));
+        print(String.format("%s : %s", WINNER, String.join(", ", racingCars)));
     }
 
     public static void printGameResult(int number, ArrayList<RacingCar> racingCars) {
-        print("실행 결과");
+        print(RESULT);
         for (int i = 0; i < number; i++) {
             round(racingCars);
             racingCars.forEach((OutputView::printCarStatus));
