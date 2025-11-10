@@ -25,5 +25,6 @@ public class Message {
             
             """;
     public static final String CUSTOM_CAR = "추가하실 경우, 다음과 같이 입력해주세요.\nex) DEFAULT, 10, 100, 10\n예시대로 할 경우, 기본 카로 속도 10, 파워 100, 운빨 100인 스펙의 자동차가 만들어지게 됩니다.\n";
+    public static final String CUR_CARS = "현재 자동자 리스트\n";
 
 }
