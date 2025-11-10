@@ -12,7 +12,7 @@ public class RacingCar {
         return new RacingCar(carName);
     }
 
-    public void incrementStatus() {
+    public void move() {
         status++;
     }
 
