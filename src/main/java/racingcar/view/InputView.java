@@ -3,6 +3,8 @@ package racingcar.view;
 import static racingcar.common.Exception.NOT_MODE;
 import static racingcar.common.Exception.NOT_SINGLE_MODE;
 import static racingcar.common.Exception.NOT_UNDER_ZERO;
+import static racingcar.common.Message.CAR_TYPE;
+import static racingcar.common.Message.CUSTOM_CAR;
 import static racingcar.common.Message.INPUT_CAR_NAME;
 import static racingcar.common.Message.INPUT_NUM;
 import static racingcar.common.Message.SELECT_MODE;
@@ -10,6 +12,7 @@ import static racingcar.common.Message.SELECT_SINGLE_MODE;
 
 import camp.nextstep.edu.missionutils.Console;
 import java.util.function.Supplier;
+import racingcar.model.Car;
 import racingcar.util.InputParser;
 import racingcar.util.Print;
 
@@ -40,6 +43,14 @@ public class InputView {
         return retryOnException(() -> {
             Print.println(INPUT_CAR_NAME);
             return InputParser.parseCarNames(readLine());
+        });
+    }
+
+    public static Car inputCustomCar() {
+        return retryOnException(() -> {
+            Print.println(CAR_TYPE);
+            Print.println(CUSTOM_CAR);
+            return InputParser.parseCar(readLine());
         });
     }
 

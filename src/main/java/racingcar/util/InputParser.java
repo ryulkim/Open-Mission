@@ -1,13 +1,15 @@
 package racingcar.util;
 
-import static racingcar.common.Exception.NOT_NUMBER;
-import static racingcar.common.Exception.NOT_UNDER_ZERO;
 import static racingcar.common.Exception.DUPLICATE_CAR_NAME;
 import static racingcar.common.Exception.EXCEED_CAR_NAME;
+import static racingcar.common.Exception.NOT_NUMBER;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import racingcar.common.CarSpec;
+import racingcar.model.Car;
+import racingcar.model.CarFactory;
 
 public class InputParser {
 
@@ -37,9 +39,14 @@ public class InputParser {
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(NOT_NUMBER.toString());
         }
-        if (result <= 0) {
-            throw new IllegalArgumentException(NOT_UNDER_ZERO.toString());
-        }
         return result;
+    }
+
+    public static Car parseCar(String input) {
+        String[] carInfo = Arrays.stream(input.split(","))
+                .map(String::trim)
+                .toArray(String[]::new);
+        return CarFactory.createCar(CarSpec.parseCarSpec(carInfo[0]), parseInt(carInfo[1]), parseInt(carInfo[2]),
+                parseInt(carInfo[3]));
     }
 }
