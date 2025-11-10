@@ -8,7 +8,7 @@ import lombok.Getter;
 import racingcar.common.CarSpec;
 
 @Getter
-abstract class Car {
+public class Car {
     protected int speed;
     protected int power;
     protected int maxLuck;

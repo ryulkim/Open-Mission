@@ -14,8 +14,9 @@ public class RacingCarController {
     }
 
     public void run() {
-        InputView.inputMode();
-        InputView.inputSingleMode();
+//        InputView.inputMode();
+//        InputView.inputSingleMode();
+        InputView.inputCustomCar();
         initRacingCars(InputView.inputCarNames());
         OutputView.printGameResult(InputView.inputNum(), racingCars);
 
