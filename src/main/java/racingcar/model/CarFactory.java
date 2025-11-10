@@ -13,7 +13,7 @@ public final class CarFactory {
             return new Truck(speed, power, maxLuck);
         }
         if (carType.equals(CarSpec.TROLL)) {
-            return new Truck(speed, power, maxLuck);
+            return new TrollCar(speed, power, maxLuck);
         }
         throw new IllegalArgumentException(NO_CAR_TYPE.toString());
     }

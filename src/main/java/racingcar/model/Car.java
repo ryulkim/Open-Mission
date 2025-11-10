@@ -22,21 +22,21 @@ abstract class Car {
     }
 
     void setSpeed(int speed) {
-        if (speed < carSpec.getMinSpeed() || speed > carSpec.getMaxSpeed()) {
+        if (speed < carSpec.minSpeed || speed > carSpec.maxSpeed) {
             throw new IllegalArgumentException(EXCEED_CAR_SPEED.toString());
         }
         this.speed = speed;
     }
 
     void setPower(int power) {
-        if (power < carSpec.getMinPower() || power > carSpec.getMaxPower()) {
+        if (power < carSpec.minPower || power > carSpec.maxPower) {
             throw new IllegalArgumentException(EXCEED_CAR_POWER.toString());
         }
         this.power = power;
     }
 
     void setMaxLuck(int maxLuck) {
-        if (maxLuck < carSpec.getMinLuck() || maxLuck > carSpec.getMaxLuck()) {
+        if (maxLuck < carSpec.minLuck || maxLuck > carSpec.maxLuck) {
             throw new IllegalArgumentException(EXCEED_CAR_LUCK.toString());
         }
         this.maxLuck = maxLuck;
