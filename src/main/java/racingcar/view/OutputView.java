@@ -28,7 +28,7 @@ public class OutputView {
         racingCars.forEach(racingCar -> {
             int num = Randoms.pickNumberInRange(0, 9);
             if (num >= 4) {
-                racingCar.incrementStatus();
+                racingCar.move();
             }
         });
     }

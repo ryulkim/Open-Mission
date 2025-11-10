@@ -2,7 +2,6 @@ package racingcar.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicInteger;
 import racingcar.model.RacingCar;
 import racingcar.view.InputView;
 import racingcar.view.OutputView;
@@ -24,19 +23,20 @@ public class RacingCarController {
     }
 
     public ArrayList<String> getWinners() {
-        AtomicInteger max = new AtomicInteger();
+        int maxStatus = getMaxStatus();
         ArrayList<String> winners = new ArrayList<>();
 
-        racingCars.sort((a, b) -> Integer.compare(b.getStatus(), a.getStatus()));
-
-        racingCars.forEach((racingCar -> {
-            if (max.get() <= racingCar.getStatus()) {
-                max.set(racingCar.getStatus());
+        for (RacingCar racingCar : racingCars) {
+            if (racingCar.getStatus() == maxStatus) {
                 winners.add(racingCar.getName());
             }
-        }));
+        }
 
         return winners;
+    }
+
+    private int getMaxStatus() {
+        return racingCars.stream().mapToInt(RacingCar::getStatus).max().orElse(0);
     }
 
     private void initRacingCars(String[] carNames) {
