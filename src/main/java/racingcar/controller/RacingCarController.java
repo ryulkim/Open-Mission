@@ -22,10 +22,9 @@ public class RacingCarController {
     }
 
     public void run() {
-//        InputView.inputMode();
-//        InputView.inputSingleMode();
-        InputView.inputCustomCar();
-        initRacingCars(InputView.inputCarNames());
+        InputView.inputMode();
+        InputView.inputSingleMode();
+        cars.add(InputView.inputCustomCar());
         OutputView.printGameResult(InputView.inputNum(), racingCars);
 
         ArrayList<String> winners = getWinners();
