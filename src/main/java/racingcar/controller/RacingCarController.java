@@ -2,26 +2,34 @@ package racingcar.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import racingcar.common.CarSpec;
+import racingcar.model.Car;
+import racingcar.model.CarFactory;
 import racingcar.model.RacingCar;
 import racingcar.view.InputView;
 import racingcar.view.OutputView;
 
 public class RacingCarController {
     ArrayList<RacingCar> racingCars;
+    ArrayList<Car> cars;
 
     public RacingCarController() {
         racingCars = new ArrayList<>();
+        cars = new ArrayList<>();
+        cars.add(CarFactory.createCar(CarSpec.DEFAULT, 10, 100, 10));
+        cars.add(CarFactory.createCar(CarSpec.TRUCK, 10, 1000, 10));
+        cars.add(CarFactory.createCar(CarSpec.TROLL, -5, 10, 1000));
     }
 
     public void run() {
+        racingCars.clear();
 //        InputView.inputMode();
 //        InputView.inputSingleMode();
-        InputView.inputCustomCar();
-        initRacingCars(InputView.inputCarNames());
-        OutputView.printGameResult(InputView.inputNum(), racingCars);
-
-        ArrayList<String> winners = getWinners();
-        OutputView.finalWinner(winners);
+        cars.add(InputView.inputCustomCar());
+//        OutputView.printGameResult(InputView.inputNum(), racingCars);
+        OutputView.printCars(cars);
+//        ArrayList<String> winners = getWinners();
+//        OutputView.finalWinner(winners);
         InputView.close();
     }
 
