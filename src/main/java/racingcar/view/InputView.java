@@ -1,5 +1,8 @@
 package racingcar.view;
 
+import static racingcar.common.Message.INPUT_CAR_NAME;
+import static racingcar.common.Message.INPUT_NUM;
+
 import camp.nextstep.edu.missionutils.Console;
 import racingcar.util.InputParser;
 import racingcar.util.Print;
@@ -7,12 +10,12 @@ import racingcar.util.Print;
 public class InputView {
 
     public static int inputNum() {
-        Print.println("시도할 횟수는 몇 회인가요?");
+        Print.println(INPUT_NUM);
         return InputParser.parseInt(readLine());
     }
 
     public static String[] inputCarNames() {
-        Print.println("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)");
+        Print.println(INPUT_CAR_NAME);
         return InputParser.parseCarNames(readLine());
     }
 
