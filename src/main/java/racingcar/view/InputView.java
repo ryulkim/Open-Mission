@@ -18,6 +18,13 @@ import racingcar.util.Print;
 
 public class InputView {
 
+    private static final int modeFirst = 1;
+    private static final int modeLast = 1;
+    private static final int singleModeFirst = 1;
+    private static final int singleModeLast = 4;
+    private static final int roundNumMin = 1;
+    private static final int roundNumMax = 20;
+
     public static int inputMode() {
         return retryOnException(() -> {
             Print.println(SELECT_MODE);
@@ -60,7 +67,7 @@ public class InputView {
 
     private static int validMode(String mod) {
         int num = InputParser.parseInt(mod);
-        if (num < 1 || num > 2) {
+        if (num < modeFirst || num > modeLast) {
             throw new IllegalArgumentException(NOT_MODE.toString());
         }
         return num;
@@ -68,7 +75,7 @@ public class InputView {
 
     private static int validSingleMode(String mod) {
         int num = InputParser.parseInt(mod);
-        if (num < 1 || num > 3) {
+        if (num < singleModeFirst || num > singleModeLast) {
             throw new IllegalArgumentException(NOT_SINGLE_MODE.toString());
         }
         return num;
@@ -76,7 +83,7 @@ public class InputView {
 
     private static int validNum(String num) {
         int number = InputParser.parseInt(num);
-        if (number <= 0 || number > 20) {
+        if (number < roundNumMin || number > roundNumMax) {
             throw new IllegalArgumentException(NOT_UNDER_ZERO.toString());
         }
         return number;

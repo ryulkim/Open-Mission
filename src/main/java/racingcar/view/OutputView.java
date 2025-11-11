@@ -1,33 +1,33 @@
 package racingcar.view;
 
 import static racingcar.common.Message.CUR_CARS;
-import static racingcar.common.Message.RESULT;
 import static racingcar.common.Message.WINNER;
 
-import camp.nextstep.edu.missionutils.Randoms;
-import java.util.ArrayList;
+import java.util.List;
 import racingcar.model.Car;
 import racingcar.model.RacingCar;
+import racingcar.util.Print;
 
 public class OutputView {
-    public static void finalWinner(ArrayList<String> racingCars) {
-        print(String.format("%s : %s", WINNER, String.join(", ", racingCars)));
+    public static void finalWinner(List<String> racingCars) {
+        Print.println(String.format("%s : %s", WINNER, String.join(", ", racingCars)));
+        Print.println("");
     }
 
-    public static void printGameResult(int number, ArrayList<RacingCar> racingCars) {
-        print(RESULT);
-        for (int i = 0; i < number; i++) {
-            round(racingCars);
-            racingCars.forEach((OutputView::printCarStatus));
-            print("");
-        }
-    }
 
-    public static void printCars(ArrayList<Car> cars) {
-        print(CUR_CARS);
+    public static void printCars(List<Car> cars) {
+        Print.println(CUR_CARS);
         for (int i = 0; i < cars.size(); i++) {
-            print(String.format("%d. %s", i + 1, carInfo(cars.get(i))));
+            Print.println(String.format("%d. %s", i + 1, carInfo(cars.get(i))));
         }
+        Print.println("");
+    }
+
+    public static void printCarStatus(RacingCar racingCar) {
+        String output = String.format("%s : %s", racingCar.getName(),
+                "-".repeat(racingCar.getStatus()));
+        Print.println(output);
+        Print.println("");
     }
 
     private static String carInfo(Car car) {
@@ -35,22 +35,5 @@ public class OutputView {
                 car.getCarSpec().name(), car.getSpeed(), car.getPower(), car.getMaxLuck());
     }
 
-    private static void printCarStatus(RacingCar racingCar) {
-        String output = String.format("%s : %s", racingCar.getName(),
-                "-".repeat(racingCar.getStatus()));
-        print(output);
-    }
 
-    private static void round(ArrayList<RacingCar> racingCars) {
-        racingCars.forEach(racingCar -> {
-            int num = Randoms.pickNumberInRange(0, 9);
-            if (num >= 4) {
-                racingCar.move();
-            }
-        });
-    }
-
-    private static void print(String message) {
-        System.out.println(message);
-    }
 }

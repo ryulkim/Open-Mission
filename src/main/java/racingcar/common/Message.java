@@ -6,7 +6,7 @@ public class Message {
     public static final String RESULT = "실행 결과";
     public static final String WINNER = "최종 우승자";
     public static final String SELECT_MODE = "모드를 선택하세요.\n1. 혼자하는 경마 게임\n2. 멀티 플레이 경마게임 (업데이트 예정)";
-    public static final String SELECT_SINGLE_MODE = "모드를 선택하세요.\n1. 대결\n2. 현재 자동차(경마) 리스트\n3. 커스텀 자동차 추가";
+    public static final String SELECT_SINGLE_MODE = "모드를 선택하세요.\n1. 대결\n2. 현재 자동차(경마) 리스트\n3. 커스텀 자동차 추가\n4. 종료";
     public static final String CAR_TYPE = """
             추가할 수 있는 자동차 종류
             

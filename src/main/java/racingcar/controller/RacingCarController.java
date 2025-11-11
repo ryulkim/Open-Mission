@@ -1,57 +1,62 @@
 package racingcar.controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import racingcar.common.CarSpec;
-import racingcar.model.Car;
-import racingcar.model.CarFactory;
+import static racingcar.common.Message.RESULT;
+
+import java.util.List;
 import racingcar.model.RacingCar;
+import racingcar.service.RacingCarService;
+import racingcar.util.Print;
 import racingcar.view.InputView;
 import racingcar.view.OutputView;
 
 public class RacingCarController {
-    ArrayList<RacingCar> racingCars;
-    ArrayList<Car> cars;
 
-    public RacingCarController() {
-        racingCars = new ArrayList<>();
-        cars = new ArrayList<>();
-        cars.add(CarFactory.createCar(CarSpec.DEFAULT, 10, 100, 10));
-        cars.add(CarFactory.createCar(CarSpec.TRUCK, 10, 1000, 10));
-        cars.add(CarFactory.createCar(CarSpec.TROLL, -5, 10, 1000));
+    private final RacingCarService racingCarService;
+
+    public RacingCarController(RacingCarService racingCarService) {
+        this.racingCarService = racingCarService;
     }
 
     public void run() {
-        racingCars.clear();
-//        InputView.inputMode();
-//        InputView.inputSingleMode();
-        cars.add(InputView.inputCustomCar());
-//        OutputView.printGameResult(InputView.inputNum(), racingCars);
-        OutputView.printCars(cars);
-//        ArrayList<String> winners = getWinners();
-//        OutputView.finalWinner(winners);
+        selectMode();
         InputView.close();
     }
 
-    public ArrayList<String> getWinners() {
-        int maxStatus = getMaxStatus();
-        ArrayList<String> winners = new ArrayList<>();
+    private void selectMode() {
+        int mode = InputView.inputMode();
+        if (mode == 1) {
+            selectSingleMode();
+        }
+    }
 
-        for (RacingCar racingCar : racingCars) {
-            if (racingCar.getStatus() == maxStatus) {
-                winners.add(racingCar.getName());
+    private void selectSingleMode() {
+        while (true) {
+            int singleMode = InputView.inputSingleMode();
+            if (singleMode == 1) {
+                int round = InputView.inputNum();
+                List<String> winners = game(round);
+                OutputView.finalWinner(winners);
+                racingCarService.racingCarClear();
+            } else if (singleMode == 2) {
+                OutputView.printCars(racingCarService.getCars());
+            } else if (singleMode == 3) {
+                racingCarService.addCustomCar(InputView.inputCustomCar());
+                OutputView.printCars(racingCarService.getCars());
+            } else if (singleMode == 4) {
+                return;
             }
         }
-
-        return winners;
     }
 
-    private int getMaxStatus() {
-        return racingCars.stream().mapToInt(RacingCar::getStatus).max().orElse(0);
+    public List<String> game(int round) {
+        racingCarService.initRacingCars();
+        Print.println(RESULT);
+        for (int i = 0; i < round; i++) {
+            List<RacingCar> curRacingCars = racingCarService.round();
+            curRacingCars.forEach((OutputView::printCarStatus));
+        }
+        return racingCarService.getWinners();
     }
 
-    private void initRacingCars(String[] carNames) {
-        Arrays.stream(carNames).map(RacingCar::createCar).forEach(racingCars::add);
-    }
 
 }
