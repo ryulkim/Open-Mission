@@ -8,8 +8,8 @@ public class RacingCar {
         this.name = name;
     }
 
-    public static RacingCar createCar(String carName) {
-        return new RacingCar(carName);
+    public static RacingCar createCar(Car car) {
+        return new RacingCar(car.getCarSpec().name());
     }
 
     public void move() {
