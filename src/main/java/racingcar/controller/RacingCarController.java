@@ -34,7 +34,7 @@ public class RacingCarController {
             int singleMode = InputView.inputSingleMode();
             if (singleMode == 1) {
                 int round = InputView.inputNum();
-                List<String> winners = game(round);
+                String winners = game(round);
                 OutputView.finalWinner(winners);
                 racingCarService.racingCarClear();
             } else if (singleMode == 2) {
@@ -48,7 +48,7 @@ public class RacingCarController {
         }
     }
 
-    public List<String> game(int round) {
+    public String game(int round) {
         racingCarService.initRacingCars();
         Print.println(RESULT);
         for (int i = 0; i < round; i++) {

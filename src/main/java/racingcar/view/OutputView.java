@@ -9,8 +9,8 @@ import racingcar.model.RacingCar;
 import racingcar.util.Print;
 
 public class OutputView {
-    public static void finalWinner(List<String> racingCars) {
-        Print.println(String.format("%s : %s", WINNER, String.join(", ", racingCars)));
+    public static void finalWinner(String racingCars) {
+        Print.println(String.format("%s : %s", WINNER, racingCars));
         Print.println("");
     }
 
