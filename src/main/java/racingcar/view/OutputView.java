@@ -24,10 +24,8 @@ public class OutputView {
     }
 
     public static void printCarStatus(RacingCar racingCar) {
-        String output = String.format("%s : %s", racingCar.getName(),
-                "-".repeat(racingCar.getStatus()));
+        String output = String.format("%s : %s", racingCar.getName(), racingCar.getStatus());
         Print.println(output);
-        Print.println("");
     }
 
     private static String carInfo(Car car) {

@@ -54,6 +54,7 @@ public class RacingCarController {
         for (int i = 0; i < round; i++) {
             List<RacingCar> curRacingCars = racingCarService.round();
             curRacingCars.forEach((OutputView::printCarStatus));
+            Print.println("");
         }
         return racingCarService.getWinners();
     }

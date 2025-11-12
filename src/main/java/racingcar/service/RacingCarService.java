@@ -23,10 +23,7 @@ public class RacingCarService {
 
     public List<RacingCar> round() {
         racingCars.forEach(racingCar -> {
-            int num = Randoms.pickNumberInRange(0, 9);
-            if (num >= 4) {
-                racingCar.move();
-            }
+            racingCar.move(calculateGo(racingCar.getCar()));
         });
         return Collections.unmodifiableList(racingCars);
     }
@@ -62,5 +59,13 @@ public class RacingCarService {
 
     private int getMaxStatus() {
         return racingCars.stream().mapToInt(RacingCar::getStatus).max().orElse(0);
+    }
+
+    private int calculateGo(Car car) {
+        if (car.getCarSpec() == CarSpec.TROLL) {
+            return Randoms.pickNumberInRange(car.getSpeed(), -car.getSpeed()) * Randoms.pickNumberInRange(0,
+                    car.getMaxLuck());
+        }
+        return car.getSpeed() * Randoms.pickNumberInRange(0, car.getMaxLuck());
     }
 }
