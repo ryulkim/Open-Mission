@@ -48,7 +48,7 @@ public class RacingCarController {
         }
     }
 
-    public String game(int round) {
+    private String game(int round) {
         racingCarService.initRacingCars();
         Print.println(RESULT);
         for (int i = 0; i < round; i++) {
