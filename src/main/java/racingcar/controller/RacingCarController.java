@@ -33,15 +33,23 @@ public class RacingCarController {
         while (true) {
             int singleMode = InputView.inputSingleMode();
             if (singleMode == 1) {
+                int selectCar = InputView.inputSelectCar(racingCarService.getCarSize());
                 int round = InputView.inputNum();
                 String winners = game(round);
-                OutputView.finalWinner(winners);
+                OutputView.finalWinner(winners, racingCarService.getCarName(selectCar));
                 racingCarService.racingCarClear();
             } else if (singleMode == 2) {
                 OutputView.printCars(racingCarService.getCars());
             } else if (singleMode == 3) {
-                racingCarService.addCustomCar(InputView.inputCustomCar());
-                OutputView.printCars(racingCarService.getCars());
+                while (true) {
+                    try {
+                        racingCarService.addCustomCar(InputView.inputCustomCar());
+                        OutputView.printCars(racingCarService.getCars());
+                        return;
+                    } catch (IllegalArgumentException e) {
+                        Print.println(e.getMessage());
+                    }
+                }
             } else if (singleMode == 4) {
                 return;
             }

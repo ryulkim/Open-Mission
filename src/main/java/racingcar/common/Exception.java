@@ -11,6 +11,7 @@ public enum Exception {
     NO_CAR_TYPE("없는 차 종류입니다."),
     NOT_MODE("없는 모드입니다. 1~2 중에 선택해주세요."),
     NOT_SINGLE_MODE("없는 모드입니다. 1~3 중에 선택해주세요."),
+    EXCEED_SELECT_CAR("없는 자동차입니다."),
     ;
     private final String message;
 
