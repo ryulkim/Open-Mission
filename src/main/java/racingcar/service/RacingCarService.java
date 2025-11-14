@@ -18,30 +18,19 @@ public class RacingCarService {
         cars = new ArrayList<>();
         cars.add(CarFactory.createCar(CarSpec.DEFAULT, 10, 100, 10));
         cars.add(CarFactory.createCar(CarSpec.TRUCK, 10, 1000, 10));
-        cars.add(CarFactory.createCar(CarSpec.TROLL, -5, 10, 1000));
+        cars.add(CarFactory.createCar(CarSpec.TROLL, -5, 10, 500));
     }
 
     public List<RacingCar> round() {
         racingCars.forEach(racingCar -> {
-            int num = Randoms.pickNumberInRange(0, 9);
-            if (num >= 4) {
-                racingCar.move();
-            }
+            racingCar.move(calculateGo(racingCar.getCar()));
         });
         return Collections.unmodifiableList(racingCars);
     }
 
-    public List<String> getWinners() {
-        int maxStatus = getMaxStatus();
-        List<String> winners = new ArrayList<>();
-
-        for (RacingCar racingCar : racingCars) {
-            if (racingCar.getStatus() == maxStatus) {
-                winners.add(racingCar.getName());
-            }
-        }
-
-        return Collections.unmodifiableList(winners);
+    public String getWinners() {
+        sortRacingCar();
+        return racingCars.getFirst().getName();
     }
 
     public void initRacingCars() {
@@ -60,7 +49,25 @@ public class RacingCarService {
         racingCars.clear();
     }
 
-    private int getMaxStatus() {
-        return racingCars.stream().mapToInt(RacingCar::getStatus).max().orElse(0);
+    private void sortRacingCar() {
+        racingCars.sort((a, b) -> {
+            if (a.getStatus() == b.getStatus() && a.getCar().getPower() == b.getCar().getPower()) {
+                int aResult = Randoms.pickNumberInRange(a.getCar().getCarSpec().minLuck, a.getCar().getMaxLuck());
+                int bResult = Randoms.pickNumberInRange(b.getCar().getCarSpec().minLuck, b.getCar().getMaxLuck());
+                return Integer.compare(aResult, bResult);
+            }
+            if (a.getStatus() == b.getStatus()) {
+                return Integer.compare(a.getCar().getPower(), b.getCar().getPower());
+            }
+            return Integer.compare(b.getStatus(), a.getStatus());
+        });
+    }
+
+    private int calculateGo(Car car) {
+        if (car.getCarSpec() == CarSpec.TROLL) {
+            return Randoms.pickNumberInRange(car.getSpeed(), -car.getSpeed()) * Randoms.pickNumberInRange(0,
+                    car.getMaxLuck());
+        }
+        return car.getSpeed() * Randoms.pickNumberInRange(0, car.getMaxLuck());
     }
 }
