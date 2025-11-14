@@ -78,8 +78,8 @@ public class RacingCarService {
 
     private int calculateGo(Car car) {
         if (car.getCarSpec() == CarSpec.TROLL) {
-            return Randoms.pickNumberInRange(car.getSpeed(), -car.getSpeed()) * Randoms.pickNumberInRange(0,
-                    car.getMaxLuck());
+            return Randoms.pickNumberInRange(car.getSpeed(), -car.getSpeed()) * (Randoms.pickNumberInRange(0,
+                    car.getMaxLuck()) / 100);
         }
         return car.getSpeed() * Randoms.pickNumberInRange(0, car.getMaxLuck());
     }
