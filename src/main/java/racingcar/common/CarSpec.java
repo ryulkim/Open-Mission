@@ -5,9 +5,9 @@ import static racingcar.common.Exception.NO_CAR_TYPE;
 import racingcar.util.Print;
 
 public enum CarSpec {
-    DEFAULT(0, 100, 0, 100, 0, 100),
-    TRUCK(-10, 50, 0, 10000, 0, 200),
-    TROLL(-100, 5, 0, 100, 0, 10000);
+    DEFAULT(0, 5, 0, 100, 0, 150),
+    TRUCK(0, 3, 0, 10000, 0, 180),
+    TROLL(-5, 1, 0, 100, 0, 200);
 
     public final int minSpeed;
     public final int maxSpeed;
