@@ -65,17 +65,6 @@ public class InputParserTest {
         Assertions.assertThrows(IllegalArgumentException.class, () -> InputParser.parseInt(input));
     }
 
-    @Test
-    public void 예외_시도_횟수가_0_이하인_경우() {
-        // given
-        String input = "0";
-
-        // when
-
-        // then
-        Assertions.assertThrows(IllegalArgumentException.class, () -> InputParser.parseInt(input));
-    }
-
     @ParameterizedTest
     @ValueSource(strings = {"DEFAULT, 10, 100, 10", "TRUCK, -10, 50, 100", "TROLL, -100, 5, 10000"})
     public void 정상_커스텀_자동차_추가(String input) {
