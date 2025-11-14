@@ -46,7 +46,8 @@ public class InputParser {
         String[] carInfo = Arrays.stream(input.split(","))
                 .map(String::trim)
                 .toArray(String[]::new);
-        return CarFactory.createCar(CarSpec.parseCarSpec(carInfo[0]), parseInt(carInfo[1]), parseInt(carInfo[2]),
-                parseInt(carInfo[3]));
+        return CarFactory.createCar(carInfo[0], CarSpec.parseCarSpec(carInfo[1]), parseInt(carInfo[2]),
+                parseInt(carInfo[3]),
+                parseInt(carInfo[4]));
     }
 }
