@@ -36,6 +36,7 @@ public class RacingCarService {
     }
 
     public void initRacingCars() {
+        racingCars.clear();
         cars.stream().map(RacingCar::createCar).forEach(racingCars::add);
     }
 

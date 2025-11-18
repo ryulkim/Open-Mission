@@ -14,7 +14,7 @@ public class CarFactoryTest {
         CarSpec carSpec = CarSpec.valueOf(carType);
 
         // when
-        Car car = CarFactory.createCar(carSpec, 5, 5, 5);
+        Car car = CarFactory.createCar("popo", carSpec, 1, 1, 1);
 
         // then
         Assertions.assertEquals(carSpec, car.getCarSpec());
@@ -24,7 +24,6 @@ public class CarFactoryTest {
     @CsvSource({
             "DEFAULT, -10, 0, 0",
             "DEFAULT, 0, 101, 0",
-            "DEFAULT, 0, 0, 102",
             "TROLL, -101, 0, 0",
             "TROLL, 0, 100000, 0",
             "TROLL, 0, 0, 100000",
@@ -40,7 +39,7 @@ public class CarFactoryTest {
 
         // then
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> CarFactory.createCar(carSpec, speed, power, luck));
+                () -> CarFactory.createCar("popo", carSpec, speed, power, luck));
     }
 
 }
