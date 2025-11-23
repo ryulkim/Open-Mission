@@ -12,9 +12,9 @@ import static racingcar.common.Message.INPUT_SELECT_CAR;
 import static racingcar.common.Message.SELECT_MODE;
 import static racingcar.common.Message.SELECT_SINGLE_MODE;
 
-import camp.nextstep.edu.missionutils.Console;
 import java.util.function.Supplier;
 import racingcar.model.Car;
+import racingcar.util.Console;
 import racingcar.util.InputParser;
 import racingcar.util.Print;
 

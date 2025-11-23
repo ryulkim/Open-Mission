@@ -2,7 +2,6 @@ package racingcar.service;
 
 import static racingcar.common.Exception.DUPLICATE_CAR_NAME;
 
-import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,6 +9,7 @@ import racingcar.common.CarSpec;
 import racingcar.model.Car;
 import racingcar.model.CarFactory;
 import racingcar.model.RacingCar;
+import racingcar.util.Randoms;
 
 public class RacingCarService {
     List<RacingCar> racingCars;
