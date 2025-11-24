@@ -1,77 +1,70 @@
 package racingcar.controller;
 
-import camp.nextstep.edu.missionutils.Randoms;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicInteger;
+import static racingcar.common.Message.RESULT;
+
+import java.util.List;
 import racingcar.model.RacingCar;
-import racingcar.util.InputHandler;
-import racingcar.util.InputParser;
-import racingcar.util.OutputView;
+import racingcar.service.RacingCarService;
+import racingcar.util.Print;
+import racingcar.view.InputView;
+import racingcar.view.OutputView;
 
 public class RacingCarController {
-    ArrayList<RacingCar> racingCars;
 
-    public RacingCarController() {
-        racingCars = new ArrayList<>();
+    private final RacingCarService racingCarService;
+
+    public RacingCarController(RacingCarService racingCarService) {
+        this.racingCarService = racingCarService;
     }
 
     public void run() {
-        initRacingCars(inputCarNames());
-        game(inputNum());
-
-        ArrayList<String> winners = getWinners();
-        OutputView.print(String.format("%s : %s", "최종 우승자", String.join(", ", winners)));
-
-        InputHandler.close();
+        selectMode();
+        InputView.close();
     }
 
-    public ArrayList<String> getWinners() {
-        AtomicInteger max = new AtomicInteger();
-        ArrayList<String> winners = new ArrayList<>();
-
-        racingCars.sort((a, b) -> Integer.compare(b.getStatus(), a.getStatus()));
-
-        racingCars.forEach((racingCar -> {
-            if (max.get() <= racingCar.getStatus()) {
-                max.set(racingCar.getStatus());
-                winners.add(racingCar.getName());
-            }
-        }));
-
-        return winners;
-    }
-
-    private int inputNum() {
-        OutputView.print("시도할 횟수는 몇 회인가요?");
-        return InputParser.parseInt(InputHandler.readLine());
-    }
-
-    private String[] inputCarNames() {
-        OutputView.print("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)");
-        return InputParser.parseCarNames(InputHandler.readLine());
-    }
-
-    private void game(int number) {
-        OutputView.print("실행 결과");
-        for (int i = 0; i < number; i++) {
-            round();
-            racingCars.forEach((OutputView::printCarStatus));
-            OutputView.print("");
+    private void selectMode() {
+        int mode = InputView.inputMode();
+        if (mode == 1) {
+            selectSingleMode();
         }
     }
 
-    private void round() {
-        racingCars.forEach(racingCar -> {
-            int num = Randoms.pickNumberInRange(0, 9);
-            if (num >= 4) {
-                racingCar.incrementStatus();
+    private void selectSingleMode() {
+        while (true) {
+            int singleMode = InputView.inputSingleMode();
+            if (singleMode == 1) {
+                int selectCar = InputView.inputSelectCar(racingCarService.getCarSize());
+                int round = InputView.inputNum();
+                String winners = game(round);
+                OutputView.finalWinner(winners, racingCarService.getCarName(selectCar));
+                racingCarService.racingCarClear();
+            } else if (singleMode == 2) {
+                OutputView.printCars(racingCarService.getCars());
+            } else if (singleMode == 3) {
+                while (true) {
+                    try {
+                        racingCarService.addCustomCar(InputView.inputCustomCar());
+                        OutputView.printCars(racingCarService.getCars());
+                        return;
+                    } catch (IllegalArgumentException e) {
+                        Print.println(e.getMessage());
+                    }
+                }
+            } else if (singleMode == 4) {
+                return;
             }
-        });
+        }
     }
 
-    private void initRacingCars(String[] carNames) {
-        Arrays.stream(carNames).map(RacingCar::createCar).forEach(racingCars::add);
+    private String game(int round) {
+        racingCarService.initRacingCars();
+        Print.println(RESULT);
+        for (int i = 0; i < round; i++) {
+            List<RacingCar> curRacingCars = racingCarService.round();
+            curRacingCars.forEach((OutputView::printCarStatus));
+            Print.println("");
+        }
+        return racingCarService.getWinners();
     }
 
 

@@ -1,26 +1,34 @@
 package racingcar.model;
 
+import java.util.concurrent.atomic.AtomicInteger;
+import lombok.Getter;
+
 public class RacingCar {
+    @Getter
     String name;
-    int status;
+    AtomicInteger status;
+    Car car;
 
-    public RacingCar(String name) {
-        this.name = name;
+    public RacingCar(Car car) {
+        this.name = car.name;
+        this.car = car;
+        this.status = new AtomicInteger(0);
     }
 
-    public static RacingCar createCar(String carName) {
-        return new RacingCar(carName);
+    public static RacingCar createCar(Car car) {
+        return new RacingCar(car);
     }
 
-    public void incrementStatus() {
-        status++;
+    public void move(int go) {
+        status.addAndGet(go);
     }
 
-    public String getName() {
-        return name;
+    public Car getCar() {
+        return new Car(car.name, car.speed, car.power, car.maxLuck, car.carSpec);
     }
 
     public int getStatus() {
-        return status;
+        return status.get();
     }
+
 }
