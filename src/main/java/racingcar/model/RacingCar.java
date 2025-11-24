@@ -9,14 +9,14 @@ public class RacingCar {
     AtomicInteger status;
     Car car;
 
-    public RacingCar(String name, Car car) {
-        this.name = name;
+    public RacingCar(Car car) {
+        this.name = car.name;
         this.car = car;
         this.status = new AtomicInteger(0);
     }
 
     public static RacingCar createCar(Car car) {
-        return new RacingCar(car.getCarSpec().name(), car);
+        return new RacingCar(car);
     }
 
     public void move(int go) {
@@ -24,7 +24,7 @@ public class RacingCar {
     }
 
     public Car getCar() {
-        return new Car(car.speed, car.power, car.maxLuck, car.carSpec);
+        return new Car(car.name, car.speed, car.power, car.maxLuck, car.carSpec);
     }
 
     public int getStatus() {

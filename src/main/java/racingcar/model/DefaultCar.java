@@ -4,8 +4,8 @@ import racingcar.common.CarSpec;
 
 public class DefaultCar extends Car {
 
-    DefaultCar(int speed, int power, int maxLuck) {
-        super(speed, power, maxLuck, CarSpec.DEFAULT);
+    DefaultCar(String name, int speed, int power, int maxLuck) {
+        super(name, speed, power, maxLuck, CarSpec.DEFAULT);
     }
 
 }

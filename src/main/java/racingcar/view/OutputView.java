@@ -9,11 +9,11 @@ import racingcar.model.RacingCar;
 import racingcar.util.Print;
 
 public class OutputView {
-    public static void finalWinner(String racingCars) {
-        Print.println(String.format("%s : %s", WINNER, racingCars));
+    public static void finalWinner(String racingCar, String selectCar) {
+        Print.println(String.format("%s : %s", WINNER, racingCar));
+        Print.println(resultSelect(racingCar, selectCar));
         Print.println("");
     }
-
 
     public static void printCars(List<Car> cars) {
         Print.println(CUR_CARS);
@@ -24,7 +24,7 @@ public class OutputView {
     }
 
     public static void printCarStatus(RacingCar racingCar) {
-        String output = String.format("%s : %s", racingCar.getName(), racingCar.getStatus());
+        String output = String.format("%s : %s", racingCar.getName(), "-".repeat(Math.max(0, racingCar.getStatus())));
         Print.println(output);
     }
 
@@ -33,5 +33,10 @@ public class OutputView {
                 car.getCarSpec().name(), car.getSpeed(), car.getPower(), car.getMaxLuck());
     }
 
-
+    private static String resultSelect(String racingCar, String selectCar) {
+        if (racingCar.equals(selectCar)) {
+            return "You Win!!";
+        }
+        return "You lose";
+    }
 }

@@ -9,12 +9,14 @@ import racingcar.common.CarSpec;
 
 @Getter
 public class Car {
+    protected String name;
     protected int speed;
     protected int power;
     protected int maxLuck;
     protected CarSpec carSpec;
 
-    Car(int speed, int power, int maxLuck, CarSpec carSpec) {
+    Car(String name, int speed, int power, int maxLuck, CarSpec carSpec) {
+        this.name = name;
         this.carSpec = carSpec;
         setSpeed(speed);
         setPower(power);

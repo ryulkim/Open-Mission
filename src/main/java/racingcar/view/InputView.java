@@ -1,5 +1,6 @@
 package racingcar.view;
 
+import static racingcar.common.Exception.EXCEED_SELECT_CAR;
 import static racingcar.common.Exception.NOT_MODE;
 import static racingcar.common.Exception.NOT_SINGLE_MODE;
 import static racingcar.common.Exception.NOT_UNDER_ZERO;
@@ -7,12 +8,13 @@ import static racingcar.common.Message.CAR_TYPE;
 import static racingcar.common.Message.CUSTOM_CAR;
 import static racingcar.common.Message.INPUT_CAR_NAME;
 import static racingcar.common.Message.INPUT_NUM;
+import static racingcar.common.Message.INPUT_SELECT_CAR;
 import static racingcar.common.Message.SELECT_MODE;
 import static racingcar.common.Message.SELECT_SINGLE_MODE;
 
-import camp.nextstep.edu.missionutils.Console;
 import java.util.function.Supplier;
 import racingcar.model.Car;
+import racingcar.util.Console;
 import racingcar.util.InputParser;
 import racingcar.util.Print;
 
@@ -24,6 +26,7 @@ public class InputView {
     private static final int singleModeLast = 4;
     private static final int roundNumMin = 1;
     private static final int roundNumMax = 20;
+    private static final int selectCarMin = 1;
 
     public static int inputMode() {
         return retryOnException(() -> {
@@ -44,6 +47,21 @@ public class InputView {
             Print.println(INPUT_NUM);
             return validNum(readLine());
         });
+    }
+
+    public static int inputSelectCar(int selectCarMax) {
+        return retryOnException(() -> {
+            Print.println(INPUT_SELECT_CAR);
+            return validSelectCar(readLine(), selectCarMax);
+        });
+    }
+
+    private static Integer validSelectCar(String s, int selectCarMax) {
+        int num = InputParser.parseInt(s);
+        if (num > selectCarMax || num < selectCarMin) {
+            throw new IllegalArgumentException(EXCEED_SELECT_CAR.toString());
+        }
+        return num;
     }
 
     public static String[] inputCarNames() {

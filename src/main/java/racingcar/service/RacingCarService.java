@@ -1,6 +1,7 @@
 package racingcar.service;
 
-import camp.nextstep.edu.missionutils.Randoms;
+import static racingcar.common.Exception.DUPLICATE_CAR_NAME;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,6 +9,7 @@ import racingcar.common.CarSpec;
 import racingcar.model.Car;
 import racingcar.model.CarFactory;
 import racingcar.model.RacingCar;
+import racingcar.util.Randoms;
 
 public class RacingCarService {
     List<RacingCar> racingCars;
@@ -16,9 +18,9 @@ public class RacingCarService {
     public RacingCarService() {
         racingCars = new ArrayList<>();
         cars = new ArrayList<>();
-        cars.add(CarFactory.createCar(CarSpec.DEFAULT, 10, 100, 10));
-        cars.add(CarFactory.createCar(CarSpec.TRUCK, 10, 1000, 10));
-        cars.add(CarFactory.createCar(CarSpec.TROLL, -5, 10, 500));
+        cars.add(CarFactory.createCar("soni", CarSpec.DEFAULT, 3, 100, 130));
+        cars.add(CarFactory.createCar("pobi", CarSpec.TRUCK, 2, 1000, 180));
+        cars.add(CarFactory.createCar("crong", CarSpec.TROLL, -3, 100, 200));
     }
 
     public List<RacingCar> round() {
@@ -34,10 +36,14 @@ public class RacingCarService {
     }
 
     public void initRacingCars() {
+        racingCars.clear();
         cars.stream().map(RacingCar::createCar).forEach(racingCars::add);
     }
 
     public void addCustomCar(Car car) {
+        if (duplicateCarName(car.getName())) {
+            throw new IllegalArgumentException(DUPLICATE_CAR_NAME.toString());
+        }
         cars.add(car);
     }
 
@@ -47,6 +53,14 @@ public class RacingCarService {
 
     public void racingCarClear() {
         racingCars.clear();
+    }
+
+    public int getCarSize() {
+        return cars.size();
+    }
+
+    public String getCarName(int idx) {
+        return racingCars.get(idx - 1).getName();
     }
 
     private void sortRacingCar() {
@@ -65,9 +79,13 @@ public class RacingCarService {
 
     private int calculateGo(Car car) {
         if (car.getCarSpec() == CarSpec.TROLL) {
-            return Randoms.pickNumberInRange(car.getSpeed(), -car.getSpeed()) * Randoms.pickNumberInRange(0,
-                    car.getMaxLuck());
+            return Randoms.pickNumberInRange(car.getSpeed(), -car.getSpeed()) * (Randoms.pickNumberInRange(0,
+                    car.getMaxLuck()) / 100);
         }
         return car.getSpeed() * Randoms.pickNumberInRange(0, car.getMaxLuck());
+    }
+
+    private boolean duplicateCarName(String carName) {
+        return cars.stream().anyMatch((car1) -> car1.getName().equals(carName));
     }
 }
